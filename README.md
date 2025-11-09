@@ -7,7 +7,13 @@ A curated collection of RFP (Request for Proposal) questions with guidance on go
 1. **Via Issue**: Use our [RFP Question template](.github/ISSUE_TEMPLATE/rfp-question.yml) to submit a new question
 2. **Via Pull Request**: Add a new markdown file to the `questions/` directory following the [template](TEMPLATE.md)
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
+
 ## Questions by Category
+
+### Project Management
+
+- [Describe your project management methodology and how you ensure projects are delivered on time and within budget.](questions/project-management-methodology.md)
 
 ### Security
 

@@ -32,6 +32,8 @@ jobs:
           echo "1. **Via Issue**: Use our [RFP Question template](.github/ISSUE_TEMPLATE/rfp-question.yml) to submit a new question" >> README_NEW.md
           echo "2. **Via Pull Request**: Add a new markdown file to the \`questions/\` directory following the [template](TEMPLATE.md)" >> README_NEW.md
           echo "" >> README_NEW.md
+          echo "See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines." >> README_NEW.md
+          echo "" >> README_NEW.md
           echo "## Questions by Category" >> README_NEW.md
           echo "" >> README_NEW.md
           
