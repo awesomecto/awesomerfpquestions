@@ -1,0 +1,45 @@
+name: Submit RFP Question
+description: Submit a new RFP question with response guidance
+title: "[RFP Question]: "
+labels: ["rfp-question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing an RFP question! Please fill out the following fields.
+  
+  - type: input
+    id: category
+    attributes:
+      label: Category
+      description: The category this question belongs to (e.g., Technical, Financial, Security, etc.)
+      placeholder: "e.g., Technical Architecture"
+    validations:
+      required: true
+  
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: The RFP question being asked
+      placeholder: "What is your approach to..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: good_response
+    attributes:
+      label: Good Response
+      description: Example of a good response to this question
+      placeholder: "A good response should include..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: what_to_look_for
+    attributes:
+      label: What to Look For
+      description: Key points evaluators should look for in responses
+      placeholder: "Look for evidence of..."
+    validations:
+      required: true

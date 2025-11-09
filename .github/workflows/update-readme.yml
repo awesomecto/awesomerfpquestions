@@ -1,0 +1,93 @@
+name: Update README with RFP Questions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'questions/**'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Generate Questions Table
+        run: |
+          # Start building the table
+          echo "# Awesome RFP Questions" > README_NEW.md
+          echo "" >> README_NEW.md
+          echo "A curated collection of RFP (Request for Proposal) questions with guidance on good responses and evaluation criteria." >> README_NEW.md
+          echo "" >> README_NEW.md
+          echo "## How to Contribute" >> README_NEW.md
+          echo "" >> README_NEW.md
+          echo "1. **Via Issue**: Use our [RFP Question template](.github/ISSUE_TEMPLATE/rfp-question.yml) to submit a new question" >> README_NEW.md
+          echo "2. **Via Pull Request**: Add a new markdown file to the \`questions/\` directory following the [template](TEMPLATE.md)" >> README_NEW.md
+          echo "" >> README_NEW.md
+          echo "## Questions by Category" >> README_NEW.md
+          echo "" >> README_NEW.md
+          
+          # Create associative array to group questions by category
+          declare -A categories
+          
+          # Parse all question files
+          for file in questions/*.md; do
+            if [ -f "$file" ]; then
+              # Extract category from frontmatter
+              category=$(sed -n '/^---$/,/^---$/p' "$file" | grep "category:" | sed 's/category: *//' | sed 's/^ *//' | sed 's/ *$//')
+              
+              # Extract question text (line after "# Question" header)
+              question=$(awk '/^---$/,/^---$/{next} /^# Question$/{getline; getline; print; exit}' "$file")
+              
+              # Get filename without path and extension for link
+              filename=$(basename "$file")
+              
+              # Add to category array
+              if [ -n "$category" ] && [ -n "$question" ]; then
+                categories["$category"]+="- [$question](questions/$filename)|"
+              fi
+            fi
+          done
+          
+          # Sort categories and output
+          for category in "${!categories[@]}"; do
+            echo "$category"
+          done | sort | while read -r category; do
+            echo "### $category" >> README_NEW.md
+            echo "" >> README_NEW.md
+            # Split by | and output each question
+            IFS='|' read -ra QUESTIONS <<< "${categories[$category]}"
+            for q in "${QUESTIONS[@]}"; do
+              if [ -n "$q" ]; then
+                echo "$q" >> README_NEW.md
+              fi
+            done
+            echo "" >> README_NEW.md
+          done
+          
+          echo "## License" >> README_NEW.md
+          echo "" >> README_NEW.md
+          echo "MIT License - see [LICENSE](LICENSE) file for details." >> README_NEW.md
+          
+          # Replace old README with new one
+          mv README_NEW.md README.md
+      
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update README with latest RFP questions"
+            git push
+          fi
