@@ -1,0 +1,13 @@
+# Test files
+README_TEST.md
+*.tmp
+
+# macOS
+.DS_Store
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

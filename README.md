@@ -11,6 +11,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
 
 ## Questions by Category
 
+### Financial
+
+- [Please provide your pricing model and explain how costs scale with usage or additional services.](questions/financial-pricing-model.md)
+
 ### Project Management
 
 - [Describe your project management methodology and how you ensure projects are delivered on time and within budget.](questions/project-management-methodology.md)
